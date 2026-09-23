@@ -1,5 +1,31 @@
 <html lang='en'>
 	<head>
+		<script>
+		  (function() {
+		    const url = new URL(window.location.href);
+		    const params = url.searchParams;
+		    let needsUpdate = false;
+		
+		    // Default to 1080p if no other quality/resolution parameter is manually passed
+		    if (!params.has('q') && !params.has('quality') && !params.has('res')) {
+		      params.set('q', '1080');
+		      needsUpdate = true;
+		    }
+		
+		    // Default to mirror
+		    if (!params.has('mirror')) {
+		      params.set('mirror', '');
+		      needsUpdate = true;
+		    }
+		
+		    // If we added our defaults, rewrite the URL invisibly before VDO.ninja loads
+		    if (needsUpdate) {
+		      // Decode replaces the "=" that searchParams adds to empty values so &mirror= becomes &mirror
+		      const newUrl = url.toString().replace('mirror=', 'mirror');
+		      window.history.replaceState({}, document.title, newUrl);
+		    }
+		  })();
+		</script>
 		<script type="text/javascript">
 			//  MS Internet Explorer must not be given a chance to fail before I can give the user an error message.
 			try {
