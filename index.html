@@ -18,6 +18,12 @@
 		      needsUpdate = true;
 		    }
 		
+		    // Default to 15 Mbps (15000 kbps) video bitrate
+		    if (!params.has('videobitrate') && !params.has('bitrate') && !params.has('vb')) {
+		      params.set('videobitrate', '15000');
+		      needsUpdate = true;
+		    }
+		
 		    // If we added our defaults, rewrite the URL invisibly before VDO.ninja loads
 		    if (needsUpdate) {
 		      // Decode replaces the "=" that searchParams adds to empty values so &mirror= becomes &mirror
